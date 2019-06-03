@@ -1,0 +1,55 @@
+.cartContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+}
+
+.checkoutContainer > div {
+    background: #fff;
+    padding: 1em;
+}
+
+.checkoutWrapper {
+    display: grid;
+    grid-template-columns: 400px;
+    justify-content: center;
+}
+
+.cartWrapper > div {
+
+}
+
+.signInInput {
+    width: 300px;
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid #DDDDDD;
+}
+
+.signInInput:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.defaultButton {
+    font-family: 'Laila', serif;
+    font-size: 18px;
+    background-color: #E10C32;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.secondaryButton {
+    font-family: 'Laila', serif;
+    font-size: 18px;
+    background-color: green;
+    border-radius: 5px;
+    color: #fff;
+}

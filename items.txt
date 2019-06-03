@@ -1,0 +1,17 @@
+slider_image_1      Super Mega Deal         2400
+slider_image_2      Better Together Meal    2900
+slider_image_3      Superlicious Strips     1100
+slider_image_4      Mighty Twist            1200
+deal-double-down-combo deal-double-down-combo   1100
+deal-kfc-favorites  deal-kfc-favorites      950
+deal-wednesday-strips-bucket    deal-wednesday-strips-bucket       900
+deal-smoky-grilled      deal-smoky-grilled      1350
+deal-zinger-doubles     deal-zinger-doubles     550
+deal-ultimate-savings-bucket        deal-ultimate-savings-bucket        1500
+deal-big-8      deal-big-8      1200
+deal-kfc-44     deal-kfc-44     960
+STRIPS-AND-BITES-BUCKET-FOR-4   STRIPS-AND-BITES-BUCKET-FOR-4 3100
+bites_standard  bites_standard  900
+kentucky-chicken        kentucky-chicken    350
+zinger  zinger  700
+qurrito-cheeser     qurrito-cheeser     900

@@ -1,0 +1,46 @@
+.slider {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.dealsTitle {
+    display: grid;
+    grid-template-columns: 900px;
+    justify-content: center;
+}
+
+.dealsItems {
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
+    justify-content: center;
+    padding: 1em;
+}
+
+.dealsItems > div {
+    padding: 10px;
+    background: #eee;
+}
+
+.dealsItems > div:nth-child(odd) {
+    background: #ddd;
+}
+
+.dealsItem {
+    display: grid;
+    grid-template-columns: 300px;
+}
+
+.dealsItemDetails {
+    display: grid;
+    grid-template-columns: 138px 138px;
+}
+
+.addToCart > button {
+    font-family: 'Laila', serif;
+    font-size: 14px;
+    background-color: #E10C32;
+    border-radius: 5px;
+    color: #fff;
+}
