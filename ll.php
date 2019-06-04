@@ -36,6 +36,7 @@ $Item = new CartItem(1, "Burger", 550);
 
 $Item->addCustomization(23, "Sausage", 240);
 $Item->addCustomization(56, "Onions", 150);
+$Item->addCustomization(29, "Jam", 320);
 
 $Item2 = new CartItem(2, "Taco", 350);
 

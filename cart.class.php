@@ -26,6 +26,7 @@ class CartItem {
         }
         if($pos != -1) {
             unset($this->customizations[$pos]);
+            $this->customizations = array_values($this->customizations);
             return true;
         } else {
             return false;

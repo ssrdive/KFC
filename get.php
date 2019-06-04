@@ -3,11 +3,8 @@
     include './cart.class.php';
 
     $cart = unserialize($_COOKIE['cart']);
-    // var_dump($cart);
-    //
-    // echo $cart[0]->getName();
 
-    // $cart[0]->removeCustomization(23);
+    // $cart[0]->removeCustomization(56);
 
     for($i = 0; $i < count($cart); $i++) {
         echo "<b>".$cart[$i]->getName()."</b>&mdash;{$cart[$i]->getPrice()}<br>";
