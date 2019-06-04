@@ -1,0 +1,22 @@
+.adminAreaContainer {
+    display: grid;
+    grid-template-columns: 450px 450px;
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
+    justify-content: center;
+    padding: 1em;
+}
+
+.adminAreaContainer > div {
+    padding: 10px;
+    background: #eee;
+}
+
+.adminAreaContainer > div:nth-child(odd) {
+    background: #ddd;
+}
+
+.adminAreaContainerItem {
+    display: grid;
+    grid-template-columns: 450px;
+}
