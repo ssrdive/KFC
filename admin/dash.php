@@ -19,7 +19,7 @@ if(!isset($_SESSION['adminUsername'])) {
         <link rel="stylesheet" href="../css/signIn.css">
         <link rel="stylesheet" href="../css/dash.css">
         <script type="text/javascript">
-            function addItem() {
+            function addItemValidation() {
                 var name = document.getElementById('addItemName').value;
                 var price = document.getElementById('addItemPrice').value;
                 var image = document.getElementById('addItemImage').value;
@@ -30,12 +30,15 @@ if(!isset($_SESSION['adminUsername'])) {
                 }
             }
 
-            function addCustomization() {
+            function addCustomizationValidation() {
                 var item = document.getElementById('item').value;
                 var name = document.getElementById('addCustomizationName').value;
                 var price = document.getElementById('addCustomizationPrice').value;
 
-                if(name == '' || price == '' || item == )
+                if(name == '' || price == '' || item == '' || isNaN(price)) {
+                    event.preventDefault();
+                    alert('Please enter all the details');
+                }
             }
         </script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -44,6 +47,104 @@ if(!isset($_SESSION['adminUsername'])) {
         <link href="https://fonts.googleapis.com/css?family=Laila" rel="stylesheet">
     </head>
     <body>
+
+        <?php
+            if(isset($_POST['addItem'])) {
+                $name = $_POST['addItemName'];
+                $price = $_POST['addItemPrice'];
+                $deal = $_POST['deal'];
+                $file_tmp = $_FILES['addItemImage']['tmp_name'];
+                $tmp = explode('.',$_FILES['addItemImage']['name']);
+                $file_ext=strtolower(end($tmp));
+
+                $new_file_name = bin2hex(random_bytes(16)).".".$file_ext;
+
+                $val = move_uploaded_file($file_tmp, "../img/upload/".$new_file_name);
+
+                $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                if(!$db) {
+                    die("Cannot connect to database");
+                }
+
+                $sql = "INSERT INTO item (name, price, image, deal) VALUES ('{$name}', '{$price}', '{$new_file_name}', '{$deal}');";
+
+                $result = mysqli_query($db, $sql);
+
+                mysqli_close($db);
+
+                if($result) {
+                    echo "<script type='text/javascript'>alert('Item added')</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('Failed to add item')</script>";
+                }
+            } else if(isset($_POST['addCustomization'])) {
+                $item_id = $_POST['item'];
+                $name = $_POST['addCustomizationName'];
+                $price = $_POST['addCustomizationPrice'];
+
+                $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                if(!$db) {
+                    die("Cannot connect to database");
+                }
+
+                $sql = "INSERT INTO customization (item_id, name, price) VALUES ('{$item_id}', '{$name}', '{$price}');";
+
+                $result = mysqli_query($db, $sql);
+
+                mysqli_close($db);
+
+                if($result) {
+                    echo "<script type='text/javascript'>alert('Customization added')</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('Failed to add customization')</script>";
+                }
+            } else if(isset($_POST['deleteItem'])) {
+                $item_id = $_POST['item'];
+
+                $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                if(!$db) {
+                    die("Cannot connect to database");
+                }
+
+                $sql = "DELETE FROM customization WHERE item_id='{$item_id}';";
+
+                $result = mysqli_query($db, $sql);
+
+                if($result) {
+                    $sql = "DELETE FROM item WHERE id='{$item_id}';";
+                    $result = mysqli_query($db, $sql);
+                    if($result) {
+                        echo "<script type='text/javascript'>alert('Item deleted')</script>";
+                    } else {
+                        echo "<script type='text/javascript'>alert('Failed to delete item. Customizations deleted')</script>";
+                    }
+                } else {
+                    echo "<script type='text/javascript'>alert('Failed to delete relevant customizations')</script>";
+                }
+            } else if(isset($_POST['deleteCustomization'])) {
+                $customization = $_POST['customization'];
+
+                $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                if(!$db) {
+                    die("Cannot connect to database");
+                }
+
+                $sql = "DELETE FROM customization WHERE id='{$customization}';";
+
+                $result = mysqli_query($db, $sql);
+
+                if($result) {
+                    echo "<script type='text/javascript'>alert('Customization deleted')</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('Failed to delete customization')</script>";
+                }
+            }
+        ?>
+
         <div class="logoRow">
             <div>
                 <img style="width: 80px" src="../img/logo.png">
@@ -90,7 +191,7 @@ if(!isset($_SESSION['adminUsername'])) {
             <div class="adminAreaContainer">
                 <div class="adminAreaContainerItem">
                     <h4>Add Item</h4>
-                    <form action="./addItem.php" method="post" enctype="multipart/form-data">
+                    <form action="./dash.php" method="post" enctype="multipart/form-data">
                         <table>
                             <tr>
                                 <td>Name</td>
@@ -115,14 +216,14 @@ if(!isset($_SESSION['adminUsername'])) {
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><button type="submit" class="defaultButton" name="add" value="Add" onclick="addItem()">Add Item</button></td>
+                                <td><button type="submit" class="defaultButton" name="addItem" value="Add" onclick="addItemValidation()">Add Item</button></td>
                             </tr>
                         </table>
                     </form>
                 </div>
                 <div class="adminAreaContainerItem">
                     <h4>Add Customization</h4>
-                    <form action="./addCustomization.php" method="post">
+                    <form action="./dash.php" method="post">
                         <table>
                             <tr>
                                 <td>Item</td>
@@ -156,16 +257,76 @@ if(!isset($_SESSION['adminUsername'])) {
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><button type="submit" class="defaultButton" name="add" value="Add" onclick="addCustomization()">Add Customization</button></td>
+                                <td><button type="submit" class="defaultButton" name="addCustomization" value="Add" onclick="addCustomizationValidation()">Add Customization</button></td>
                             </tr>
                         </table>
                     </form>
                 </div>
                 <div class="adminAreaContainerItem">
                     <h4>Remove Item</h4>
+                    <form action="./dash.php" method="post">
+                        <table>
+                            <tr>
+                                <td>Item</td>
+                                <td>
+                                    <select name="item" id="item">
+                                        <?php
+                                            $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                                            if(!$db) {
+                                                die("Cannot connect to database");
+                                            }
+
+                                            $sql = "SELECT * FROM item;";
+
+                                            $result = mysqli_query($db, $sql);
+
+                                            while($row = mysqli_fetch_assoc($result)) {
+                                                echo "<option value='{$row['id']}'>{$row['name']}</option>";
+                                            }
+                                        ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button type="submit" class="defaultButton" name="deleteItem" value="Add">Delete Item</button></td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
                 <div class="adminAreaContainerItem">
                     <h4>Remove Customimzation</h4>
+                    <form action="./dash.php" method="post">
+                        <table>
+                            <tr>
+                                <td>Customization</td>
+                                <td>
+                                    <select name="customization" id="customization">
+                                        <?php
+                                            $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                                            if(!$db) {
+                                                die("Cannot connect to database");
+                                            }
+
+                                            $sql = "SELECT C.name as c_name, C.id as c_id, I.name as i_name FROM customization C LEFT JOIN item I ON I.id = C.item_id;";
+
+                                            $result = mysqli_query($db, $sql);
+
+                                            while($row = mysqli_fetch_assoc($result)) {
+                                                echo "<option value='{$row['c_id']}'>{$row['i_name']}&mdash;{$row['c_name']}</option>";
+                                            }
+                                        ?>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button type="submit" class="defaultButton" name="deleteCustomization" value="Add">Delete Customization</button></td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>

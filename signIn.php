@@ -1,3 +1,11 @@
+<?php
+include './database.php';
+session_start();
+
+if(isset($_SESSION['customerUsername'])) {
+    header('Location: ./index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -25,6 +33,40 @@
         <link href="https://fonts.googleapis.com/css?family=Laila" rel="stylesheet">
     </head>
     <body>
+
+        <?php
+
+            if(isset($_POST['sign_in'])) {
+                $email = $_POST['signInEmail'];
+                $password = $_POST['signInPassword'];
+
+                $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                if(!$db) {
+                    die("Cannot connect to database");
+                }
+
+                $sql = "SELECT * FROM customer WHERE email='{$email}' AND password='{$password}'";
+
+                $result = mysqli_query($db, $sql);
+
+                mysqli_close($db);
+
+
+                if(mysqli_num_rows($result) > 0) {
+
+                    $row = mysqli_fetch_assoc($result);
+
+                    $_SESSION['customerUsername'] = $email;
+                    $_SESSION['customerName'] = $row['name'];
+                    header('Location: ./index.php');
+                } else {
+                    echo "<script type='text/javascript'>alert('Please check credentials')</script>";
+                }
+            }
+
+        ?>
+
         <div class="logoRow">
             <div>
                 <img style="width: 80px" src="./img/logo.png">
@@ -66,11 +108,11 @@
                         <table>
                             <tr>
                                 <td style="font-family: 'Laila', serif;">Email</td>
-                                <td><input type="text" id="signInEmail" class="signInInput"></td>
+                                <td><input type="text" name="signInEmail" id="signInEmail" class="signInInput"></td>
                             </tr>
                             <tr>
                                 <td style="font-family: 'Laila', serif;">Pasword&nbsp;&nbsp;</td>
-                                <td><input type="password" id="signInPassword" class="signInInput"></td>
+                                <td><input type="password" name="signInPassword" id="signInPassword" class="signInInput"></td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -80,7 +122,7 @@
                                 <td></td>
                                 <td style="float: right;">
                                     <a href="./register.php"><button type="button" class="secondaryButton" name="button">Register</button></a>
-                                    <button type="submit" class="defaultButton" name="" value="Sign in" onclick="signInClicked()">Sign in</button>
+                                    <button type="submit" class="defaultButton" name="sign_in" value="Sign in" onclick="signInClicked()">Sign in</button>
                                 </td>
                             </tr>
                         </table>

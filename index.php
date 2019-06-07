@@ -1,3 +1,7 @@
+<?php
+include './database.php';
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,8 +24,15 @@
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/signIn.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
+                    <?php
+                        if(isset($_SESSION['customerUsername'])) {
+                            echo "<a href='#'>Hello {$_SESSION['customerName']}</a>&nbsp;&nbsp;&bull;&nbsp;";
+                            echo '<a href="/signout.php">Sign out</a>&nbsp;&nbsp;&bull;&nbsp;';
+                        } else {
+                            echo '<a href="/signIn.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;';
+                            echo '<a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;';
+                        }
+                    ?>
                     <a href="/cart.php">Cart (4)</a>&nbsp;
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
                 </div>
@@ -88,85 +99,29 @@
 
         <div class="dealsItems">
 
-            <div class="dealsItem">
-                <div>
-                    <a href="#"><img style="width: 276px; border-radius: 10px;" src="./img/deal-double-down-combo.png" alt="Double Down Combo"></a>
-                </div>
-                <div class="dealsItemDetails" style="padding-top: 10px">
-                    <div>Double Down Combo &bull; RS. 1100</div>
-                    <div class="addToCart"><button style="float: right;">Add to cart</button></div>
-                </div>
-            </div>
+            <?php
+                $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
 
-            <div class="dealsItem">
-                <div>
-                    <a href="#"><img style="width: 276px; border-radius: 10px;" src="./img/deal-kfc-favorites.png"></a>
-                </div>
-                <div class="dealsItemDetails" style="padding-top: 10px">
-                    <div>KFC Favorites &bull; RS. 950</div>
-                    <div class="addToCart"><button style="float: right;">Add to cart</button></div>
-                </div>
-            </div>
+                if(!$db) {
+                    die("Cannot connect to database");
+                }
 
-            <div class="dealsItem">
-                <div>
-                    <a href="#"><img style="width: 276px; border-radius: 10px;" src="./img/deal-wednesday-strips-bucket.png"></a>
-                </div>
-                <div class="dealsItemDetails" style="padding-top: 10px">
-                    <div>Wednesday Strips Bucket &bull; RS. 900</div>
-                    <div class="addToCart"><button style="float: right;">Add to cart</button></div>
-                </div>
-            </div>
+                $sql = "SELECT * FROM item WHERE deal = 1;";
 
-            <div class="dealsItem">
-                <div>
-                    <a href="#"><img style="width: 276px; border-radius: 10px;" src="./img/deal-smoky-grilled.png"></a>
-                </div>
-                <div class="dealsItemDetails" style="padding-top: 10px">
-                    <div>Smoky Grilled &bull; RS. 1350</div>
-                    <div class="addToCart"><button style="float: right;">Add to cart</button></div>
-                </div>
-            </div>
+                $result = mysqli_query($db, $sql);
 
-            <div class="dealsItem">
-                <div>
-                    <a href="#"><img style="width: 276px; border-radius: 10px;" src="./img/deal-zinger-doubles.png"></a>
-                </div>
-                <div class="dealsItemDetails" style="padding-top: 10px">
-                    <div>Zinger Doubles &bull; RS. 550</div>
-                    <div class="addToCart"><button style="float: right;">Add to cart</button></div>
-                </div>
-            </div>
-
-            <div class="dealsItem">
-                <div>
-                    <a href="#"><img style="width: 276px; border-radius: 10px;" src="./img/deal-ultimate-savings-bucket.png"></a>
-                </div>
-                <div class="dealsItemDetails" style="padding-top: 10px">
-                    <div>Ultimate Savings Bucket &bull; RS. 1500</div>
-                    <div class="addToCart"><button style="float: right;">Add to cart</button></div>
-                </div>
-            </div>
-
-            <div class="dealsItem">
-                <div>
-                    <a href="#"><img style="width: 276px; border-radius: 10px;" src="./img/deal-big-8.png"></a>
-                </div>
-                <div class="dealsItemDetails" style="padding-top: 10px">
-                    <div>Big 8 &bull; RS. 1200</div>
-                    <div class="addToCart"><button style="float: right;">Add to cart</button></div>
-                </div>
-            </div>
-
-            <div class="dealsItem">
-                <div>
-                    <a href="#"><img style="width: 276px; border-radius: 10px;" src="./img/deal-kfc-44.png"></a>
-                </div>
-                <div class="dealsItemDetails" style="padding-top: 10px">
-                    <div>KFC 44 &bull; RS. 960</div>
-                    <div class="addToCart"><button style="float: right;">Add to cart</button></div>
-                </div>
-            </div>
+                while($row = mysqli_fetch_assoc($result)) {
+                    echo "<div class='dealsItem'>";
+                    echo "    <div>";
+                    echo "        <a href='#'><img style='width: 276px; border-radius: 10px;' src='./img/upload/{$row['image']}'></a>";
+                    echo "    </div>";
+                    echo "    <div class='dealsItemDetails' style='padding-top: 10px'>";
+                    echo "        <div>{$row['name']} &bull; {$row['price']}</div>";
+                    echo "        <div class='addToCart'><button style='float: right;'>Add to cart</button></div>";
+                    echo "    </div>";
+                    echo "</div>";
+                }
+            ?>
 
         </div>
 
