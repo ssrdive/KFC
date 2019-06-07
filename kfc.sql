@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.15.7
--- http://www.phpmyadmin.net
+-- version 4.6.6deb5
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 07, 2019 at 09:30 AM
--- Server version: 5.6.37
--- PHP Version: 7.1.8
+-- Host: localhost:3306
+-- Generation Time: Jun 07, 2019 at 06:09 PM
+-- Server version: 5.7.26-0ubuntu0.18.04.1
+-- PHP Version: 7.2.19-0ubuntu0.18.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,11 +26,11 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin_user`
 --
 
-CREATE TABLE IF NOT EXISTS `admin_user` (
+CREATE TABLE `admin_user` (
   `id` int(11) NOT NULL,
   `username` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin_user`
@@ -42,10 +42,30 @@ INSERT INTO `admin_user` (`id`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `id` int(11) NOT NULL,
+  `email` varchar(64) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`id`, `email`, `password`, `name`) VALUES
+(1, 'shamal@gmail.com', 'shamal', 'Shamal Sandeep');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customization`
 --
 
-CREATE TABLE IF NOT EXISTS `customization` (
+CREATE TABLE `customization` (
   `id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -58,31 +78,32 @@ CREATE TABLE IF NOT EXISTS `customization` (
 -- Table structure for table `item`
 --
 
-CREATE TABLE IF NOT EXISTS `item` (
+CREATE TABLE `item` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   `price` int(11) NOT NULL,
   `image` varchar(64) NOT NULL,
   `deal` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `item`
 --
 
 INSERT INTO `item` (`id`, `name`, `price`, `image`, `deal`) VALUES
-(1, 'STRIPS AND BITES BUCKET', 3100, 'e7b1f97095ab5ae527fbfc9bf16d2b61.jpg', 0),
-(2, 'Bites Standard', 900, '4d19faa9b2f61f54fad004427ad8092a.jpg', 0),
-(3, 'Double Down Combo', 1100, 'f490783dae0f4d7c47f4b9b5663bfc6f.png', 1),
-(6, 'KFC Favorites', 950, '0f145cf539a4bfcc90bef75d08350a90.png', 1),
-(7, 'Zinger Doubles', 550, '0cafd88821a53bb009564ad1685b633d.png', 1),
-(8, 'Ultimate Savings Bucket', 1500, '2a44981041066b8c282db01cc3f8eb5a.png', 1),
-(9, 'KFC 44', 960, '3e92d89b0d592b0265531b1150e462e2.png', 1),
-(10, 'Big 8', 1200, '89c5a9ec4195263d1d802babf62f1817.png', 1),
-(11, 'Kentucky Chicken ', 350, '4e722557480d423859e1ca3e966b2df3.jpg', 0),
-(12, 'Smoky Grilled', 1350, '9f905ff682409e269e752c4b2e35797b.png', 1),
-(13, 'Wednesday Strips Bucket', 900, '2690b266d8067c03244abe3cfdd5604d.png', 1),
-(14, 'Qurrito Cheeser', 345, '4f9e67c6cb98bc9d72087532509f957c.jpg', 1);
+(25, 'Double Down Combo', 1100, '4749ba09104214b1f8046cb3d48938ba.png', 1),
+(26, 'KFC Favorites', 950, 'a469186f61ac7150b8652e4ddf6312ad.png', 1),
+(27, 'Wednesday Strips Bucket', 900, '03099bee49d1af734cd66e7791734437.png', 1),
+(28, 'Smoky Grilled', 1350, '3d03cbe7b3be31a21294971dc8b1b1a7.png', 1),
+(29, 'Zinger Doubles', 550, 'b7a0ce0c3c0dec2bd5b7bac351a374e3.png', 1),
+(30, 'Ultimate Savings Bucket', 1500, '1703dda694bf26f69358bd643ea12e16.png', 1),
+(31, 'Big 8', 1200, '72cd8720c572d45c89d106f5dd3a9534.png', 1),
+(32, 'KFC 44', 960, 'e9ad2ad8523bb4423e74f03a6c64d2b6.png', 1),
+(33, 'STRIPS AND BITES BUCKET FOR 4', 3100, 'edd9cd936fefb27b5c5c550db9bb3419.jpg', 0),
+(34, 'Bites Standard', 900, '005dd616c5b4bf112d2c081dcccdf659.jpg', 0),
+(35, 'Kentucky Chicken', 350, 'df72f3d3385621fc25a38ea2af3b5d6d.jpg', 0),
+(36, 'Zinger', 700, 'b143a5b581990a00fea0855b877e6244.jpg', 0),
+(37, 'Qurrito Cheeser', 900, '975ef7a198a7ed18ce5bc8ff3df5cc2d.jpg', 0);
 
 --
 -- Indexes for dumped tables
@@ -92,6 +113,12 @@ INSERT INTO `item` (`id`, `name`, `price`, `image`, `deal`) VALUES
 -- Indexes for table `admin_user`
 --
 ALTER TABLE `admin_user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -115,17 +142,22 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT for table `admin_user`
 --
 ALTER TABLE `admin_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `customization`
 --
 ALTER TABLE `customization`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- Constraints for dumped tables
 --
