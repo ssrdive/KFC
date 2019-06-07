@@ -28,8 +28,11 @@
 
     mysqli_close($db);
 
-    echo "<script type='text/javascript'>alert('Item Added')</script>";
+    if($result) {
+        header('Location: ./index.php?message=Item+added');
+    } else {
+        header('Location: ./index.php?message=Failed+to+add+item');
+    }
 
-    header('Location: ./index.php');
 
 ?>
