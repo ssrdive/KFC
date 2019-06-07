@@ -117,7 +117,7 @@ session_start();
                     echo "    </div>";
                     echo "    <div class='dealsItemDetails' style='padding-top: 10px'>";
                     echo "        <div>{$row['name']} &bull; {$row['price']}</div>";
-                    echo "        <div class='addToCart'><button style='float: right;'>Add to cart</button></div>";
+                    echo "        <div class='addToCart'><button onclick=\"location.href='./addToCart.php?id={$row['id']}';\" style='float: right;'>Add to cart</button></div>";
                     echo "    </div>";
                     echo "</div>";
                 }
