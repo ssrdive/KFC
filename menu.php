@@ -25,7 +25,7 @@ session_start();
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/signIn.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
+                    <a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
                     <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
                     <a href="/cart.php">Cart (4)</a>&nbsp;
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
@@ -78,7 +78,7 @@ session_start();
                     echo "    </div>";
                     echo "    <div class='dealsItemDetails' style='padding-top: 10px'>";
                     echo "        <div>{$row['name']} &bull; {$row['price']}</div>";
-                    echo "        <div class='addToCart'><button onclick=\"location.href='./addToCart.php?id={$row['id']}';\" style='float: right;'>Add to cart</button></div>";
+                    echo "        <div class='addToCart'><button onclick=\"location.href='./add_to_cart.php?id={$row['id']}';\" style='float: right;'>Add to cart</button></div>";
                     echo "    </div>";
                     echo "</div>";
                 }

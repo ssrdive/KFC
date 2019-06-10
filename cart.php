@@ -26,7 +26,7 @@ session_start();
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/signIn.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
+                    <a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
                     <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
                     <a href="/cart.php">Cart (4)</a>&nbsp;
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
@@ -96,7 +96,7 @@ session_start();
                                     echo "    <td>{$cart[$i]->getPrice()}</td>";
                                     echo "    <td>{$customizations_price}</td>";
                                     echo "    <td>{$price}</td>";
-                                    echo "    <td><a href='./deleteFromCart.php?id={$cart[$i]->getID()}'>Delete</a></td>";
+                                    echo "    <td><a href='./delete_from_cart.php?id={$cart[$i]->getID()}'>Delete</a></td>";
                                     echo "</tr>";
                                 }
 

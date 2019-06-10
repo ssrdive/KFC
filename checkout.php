@@ -31,7 +31,7 @@
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/signIn.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
+                    <a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
                     <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
                     <a href="/cart.php">Cart (4)</a>&nbsp;
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>

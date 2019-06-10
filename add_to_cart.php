@@ -5,7 +5,7 @@ include './cart.class.php';
 session_start();
 
 if(!isset($_SESSION['customerUsername'])) {
-    header('Location: ./signIn.php');
+    header('Location: ./sign_in.php');
 }
 
 $item_id = $_GET['id'];
@@ -113,7 +113,7 @@ if(mysqli_num_rows($customizations_db) == 0) {
                             echo "<a href='#'>Hello {$_SESSION['customerName']}</a>&nbsp;&nbsp;&bull;&nbsp;";
                             echo '<a href="/signout.php">Sign out</a>&nbsp;&nbsp;&bull;&nbsp;';
                         } else {
-                            echo '<a href="/signIn.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;';
+                            echo '<a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;';
                             echo '<a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;';
                         }
                     ?>

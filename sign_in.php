@@ -73,7 +73,7 @@ if(isset($_SESSION['customerUsername'])) {
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/signIn.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
+                    <a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
                     <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
                     <a href="/cart.php">Cart (4)</a>&nbsp;
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
@@ -104,7 +104,7 @@ if(isset($_SESSION['customerUsername'])) {
             <div class="signInWrapper">
                 <div>
                     <h1 style="font-family: 'Laila', serif; text-align: center;">Sign in to reorder</h1>
-                    <form action="/signIn.php" method="post">
+                    <form action="/sign_in.php" method="post">
                         <table>
                             <tr>
                                 <td style="font-family: 'Laila', serif;">Email</td>

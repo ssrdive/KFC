@@ -29,7 +29,7 @@ session_start();
                             echo "<a href='#'>Hello {$_SESSION['customerName']}</a>&nbsp;&nbsp;&bull;&nbsp;";
                             echo '<a href="/signout.php">Sign out</a>&nbsp;&nbsp;&bull;&nbsp;';
                         } else {
-                            echo '<a href="/signIn.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;';
+                            echo '<a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;';
                             echo '<a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;';
                         }
                     ?>
@@ -117,7 +117,7 @@ session_start();
                     echo "    </div>";
                     echo "    <div class='dealsItemDetails' style='padding-top: 10px'>";
                     echo "        <div>{$row['name']} &bull; {$row['price']}</div>";
-                    echo "        <div class='addToCart'><button onclick=\"location.href='./addToCart.php?id={$row['id']}';\" style='float: right;'>Add to cart</button></div>";
+                    echo "        <div class='addToCart'><button onclick=\"location.href='./add_to_cart.php?id={$row['id']}';\" style='float: right;'>Add to cart</button></div>";
                     echo "    </div>";
                     echo "</div>";
                 }

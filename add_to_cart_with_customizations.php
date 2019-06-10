@@ -5,7 +5,7 @@ include './cart.class.php';
 session_start();
 
 if(!isset($_SESSION['customerUsername'])) {
-    header('Location: ./signIn.php');
+    header('Location: ./sign_in.php');
 }
 
 $item_id = $_GET['id'];
