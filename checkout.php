@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,15 +12,6 @@
         <link rel="stylesheet" href="./css/layout.css">
         <link rel="stylesheet" href="./css/checkout.css">
         <script type="text/javascript">
-            function signInClicked() {
-                var email = document.getElementById('signInEmail').value;
-                var password = document.getElementById('signInPassword').value;
-
-                if(email == '' || password == '') {
-                    event.preventDefault();
-                    alert('Please enter sign in email and password');
-                }
-            }
         </script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -31,9 +25,9 @@
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/cart.php">Cart (4)</a>&nbsp;
+                    <?php
+                        include './layout/sign_in_menu.php';
+                    ?>
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
                 </div>
             </div>
@@ -44,7 +38,7 @@
                 <div class="menuBarContent">
                     <div>
                         <a class="active" href="/">DEALS</a>
-                        <a href="./menu.php">MENU</a>
+                        <a href="/menu.php">MENU</a>
                     </div>
                     <div class="search-container">
                         <div>

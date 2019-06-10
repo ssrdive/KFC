@@ -25,9 +25,9 @@ session_start();
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/cart.php">Cart (4)</a>&nbsp;
+                    <?php
+                        include './layout/sign_in_menu.php';
+                    ?>
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
                 </div>
             </div>

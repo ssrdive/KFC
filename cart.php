@@ -26,9 +26,9 @@ session_start();
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/cart.php">Cart (4)</a>&nbsp;
+                    <?php
+                        include './layout/sign_in_menu.php';
+                    ?>
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
                 </div>
             </div>
@@ -39,7 +39,7 @@ session_start();
                 <div class="menuBarContent">
                     <div>
                         <a class="active" href="/">DEALS</a>
-                        <a href="./menu.php">MENU</a>
+                        <a href="/menu.php">MENU</a>
                     </div>
                     <div class="search-container">
                         <div>
@@ -98,6 +98,17 @@ session_start();
                                     echo "    <td>{$price}</td>";
                                     echo "    <td><a href='./delete_from_cart.php?id={$cart[$i]->getID()}'>Delete</a></td>";
                                     echo "</tr>";
+
+                                    for($j = 0; $j < count($customizations); $j++) {
+                                        echo "<tr>";
+                                        echo "    <td><i>&nbsp;&nbsp;+  {$customizations[$j]->getName()}</i></td>";
+                                        echo "    <td></td>";
+                                        echo "    <td>{$customizations[$j]->getPrice()}</td>";
+                                        echo "    <td></td>";
+                                        echo "    <td></td>";
+                                        echo "    <td><a href='./delete_customization.php?id={$cart[$i]->getID()}&cid={$customizations[$j]->getId()}'>Delete</a></td>";
+                                        echo "</tr>";
+                                    }
                                 }
 
                                 echo "<tr>";

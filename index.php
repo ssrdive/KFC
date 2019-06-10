@@ -25,15 +25,8 @@ session_start();
             <div class="topSideBar">
                 <div>
                     <?php
-                        if(isset($_SESSION['customerUsername'])) {
-                            echo "<a href='#'>Hello {$_SESSION['customerName']}</a>&nbsp;&nbsp;&bull;&nbsp;";
-                            echo '<a href="/sign_out.php">Sign out</a>&nbsp;&nbsp;&bull;&nbsp;';
-                        } else {
-                            echo '<a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;';
-                            echo '<a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;';
-                        }
+                        include './layout/sign_in_menu.php';
                     ?>
-                    <a href="/cart.php">Cart (4)</a>&nbsp;
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
                 </div>
             </div>
@@ -44,7 +37,7 @@ session_start();
                 <div class="menuBarContent">
                     <div>
                         <a class="active" href="/">DEALS</a>
-                        <a href="./menu.php">MENU</a>
+                        <a href="/menu.php">MENU</a>
                     </div>
                     <div class="search-container">
                         <div>
