@@ -4,12 +4,14 @@ class CartItem {
     private $id;
     private $name;
     private $price;
+    private $qty;
     private $customizations = array();
 
-    function  __construct($id, $name, $price) {
+    function  __construct($id, $name, $price, $qty) {
         $this->id = $id;
         $this->name = $name;
         $this->price = $price;
+        $this->qty = $qty;
     }
 
     function addCustomization($id, $name, $price) {
@@ -45,8 +47,16 @@ class CartItem {
         return $this->price;
     }
 
+    function getQty() {
+        return $this->qty;
+    }
+
     function getCustomizations() {
         return $this->customizations;
+    }
+
+    function setQty($qty) {
+        $this->qty = $qty;
     }
 }
 

@@ -1,3 +1,7 @@
+<?php
+include './cart.class.php';
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,15 +13,6 @@
         <link rel="stylesheet" href="./css/layout.css">
         <link rel="stylesheet" href="./css/cart.css">
         <script type="text/javascript">
-            function signInClicked() {
-                var email = document.getElementById('signInEmail').value;
-                var password = document.getElementById('signInPassword').value;
-
-                if(email == '' || password == '') {
-                    event.preventDefault();
-                    alert('Please enter sign in email and password');
-                }
-            }
         </script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -70,50 +65,51 @@
                                 <th>Unit Price (RS)</th>
                                 <th>Options (RS)</th>
                                 <th>Price (RS)</th>
-                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Double Down Combo</td>
-                                <td>1</td>
-                                <td>350</td>
-                                <td>0</td>
-                                <td>350</td>
-                                <td>Edit</td>
-                            </tr>
-                            <tr>
-                                <td>MIGHTY TWIST</td>
-                                <td>2</td>
-                                <td>1200</td>
-                                <td>0</td>
-                                <td>2400</td>
-                                <td>Edit</td>
-                            </tr>
-                            <tr>
-                                <td>Zinger Doubles</td>
-                                <td>4</td>
-                                <td>480</td>
-                                <td>0</td>
-                                <td>1920</td>
-                                <td>Edit</td>
-                            </tr>
-                            <tr>
-                                <td>Better Together</td>
-                                <td>1</td>
-                                <td>2900</td>
-                                <td>0</td>
-                                <td>2900</td>
-                                <td>Edit</td>
-                            </tr>
-                            <tr>
-                                <td><b>Total</b></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>7570</td>
-                                <td>Edit</td>
-                            </tr>
+
+                            <?php
+
+                                $cart = unserialize($_COOKIE['cart']);
+
+                                $totalPrice = 0;
+
+                                for($i = 0; $i < count($cart); $i++) {
+
+                                    $customizations_price = 0;
+
+                                    $customizations = $cart[$i]->getCustomizations();
+
+                                    for($j = 0; $j < count($customizations); $j++) {
+                                        $customizations_price = $customizations_price + ($customizations[$j]->getPrice() * $cart[$i]->getQty());
+                                    }
+
+                                    $price = $cart[$i]->getPrice() * $cart[$i]->getQty() + $customizations_price;
+
+                                    $totalPrice = $totalPrice + $price;
+
+                                    echo "<tr>";
+                                    echo "    <td>{$cart[$i]->getName()}</td>";
+                                    echo "    <td>{$cart[$i]->getQty()}</td>";
+                                    echo "    <td>{$cart[$i]->getPrice()}</td>";
+                                    echo "    <td>{$customizations_price}</td>";
+                                    echo "    <td>{$price}</td>";
+                                    echo "    <td><a href='./deleteFromCart.php?id={$cart[$i]->getID()}'>Delete</a></td>";
+                                    echo "</tr>";
+                                }
+
+                                echo "<tr>";
+                                echo "    <td><b>Total</b></td>";
+                                echo "    <td></td>";
+                                echo "    <td></td>";
+                                echo "    <td></td>";
+                                echo "    <td>{$totalPrice}</td>";
+                                echo "    <td></td>";
+                                echo "</tr>";
+
+                            ?>
                         </tbody>
                     </table>
                     <a href='./menu.php'><button type="submit" class="secondaryButton" name="" value="Sign in">Order More</button></a>
