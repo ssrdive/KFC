@@ -181,8 +181,8 @@ if(mysqli_num_rows($customizations_db) == 0) {
             <div class="bottomNavContents">
                 <div>
                     <a href="/">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="/about-kfc.php">About KFC</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="/contact-us.php">Contact Us</a>&nbsp;&nbsp;&nbsp;
+                    <a href="/about_kfc.php">About KFC</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/contact_us.php">Contact Us</a>&nbsp;&nbsp;&nbsp;
                     <a href="#">Feedback</a>
                 </div>
                 <div class="socialMediaIcons">
