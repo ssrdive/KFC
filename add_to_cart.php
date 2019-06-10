@@ -111,7 +111,7 @@ if(mysqli_num_rows($customizations_db) == 0) {
                     <?php
                         if(isset($_SESSION['customerUsername'])) {
                             echo "<a href='#'>Hello {$_SESSION['customerName']}</a>&nbsp;&nbsp;&bull;&nbsp;";
-                            echo '<a href="/signout.php">Sign out</a>&nbsp;&nbsp;&bull;&nbsp;';
+                            echo '<a href="/sign_out.php">Sign out</a>&nbsp;&nbsp;&bull;&nbsp;';
                         } else {
                             echo '<a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;';
                             echo '<a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;';

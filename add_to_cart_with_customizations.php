@@ -27,9 +27,9 @@ $item_details = mysqli_fetch_assoc($item_db);
 
 if(count($customizations) == 0) {
     if(!isset($_COOKIE['cart'])) {
-        $Item = new CartItem($item_id, $item_details['name'], $item_details['price'], 1);
+        $item = new CartItem($item_id, $item_details['name'], $item_details['price'], 1);
 
-        setcookie("cart", serialize(array($Item)));
+        setcookie("cart", serialize(array($item)));
         header("Location: ./cart.php");
     } else {
         $cart = unserialize($_COOKIE['cart']);
@@ -51,8 +51,8 @@ if(count($customizations) == 0) {
             setcookie("cart", serialize($cart));
             header("Location: ./cart.php");
         } else {
-            $Item = new CartItem($item_id, $item_details['name'], $item_details['price'], 1);
-            array_push($cart, $Item);
+            $item = new CartItem($item_id, $item_details['name'], $item_details['price'], 1);
+            array_push($cart, $item);
 
             setcookie("cart", serialize($cart));
             header("Location: ./cart.php");
@@ -61,14 +61,14 @@ if(count($customizations) == 0) {
     }
 } else {
     if(!isset($_COOKIE['cart'])) {
-        $Item = new CartItem($item_id, $item_details['name'], $item_details['price'], 1);
+        $item = new CartItem($item_id, $item_details['name'], $item_details['price'], 1);
 
         for($i = 0; $i < count($customizations); $i++) {
             $customization = explode("&", $customizations[$i]);
-            $Item->addCustomization($customization[0], $customization[1], $customization[2]);
+            $item->addCustomization($customization[0], $customization[1], $customization[2]);
         }
 
-        setcookie("cart", serialize(array($Item)));
+        setcookie("cart", serialize(array($item)));
         header("Location: ./cart.php");
     } else {
         $cart = unserialize($_COOKIE['cart']);
@@ -90,13 +90,13 @@ if(count($customizations) == 0) {
             setcookie("cart", serialize($cart));
             header("Location: ./cart.php");
         } else {
-            $Item = new CartItem($item_id, $item_details['name'], $item_details['price'], 1);
+            $item = new CartItem($item_id, $item_details['name'], $item_details['price'], 1);
 
             for($i = 0; $i < count($customizations); $i++) {
                 $customization = explode("&", $customizations[$i]);
-                $Item->addCustomization($customization[0], $customization[1], $customization[2]);
+                $item->addCustomization($customization[0], $customization[1], $customization[2]);
             }
-            array_push($cart, $Item);
+            array_push($cart, $item);
 
             setcookie("cart", serialize($cart));
             header("Location: ./cart.php");
