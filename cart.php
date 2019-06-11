@@ -72,42 +72,44 @@ session_start();
 
                             <?php
 
-                                $cart = unserialize($_COOKIE['cart']);
-
                                 $totalPrice = 0;
 
-                                for($i = 0; $i < count($cart); $i++) {
+                                if(isset($_COOKIE['cart'])) {
+                                    $cart = unserialize($_COOKIE['cart']);
 
-                                    $customizations_price = 0;
+                                    for($i = 0; $i < count($cart); $i++) {
 
-                                    $customizations = $cart[$i]->getCustomizations();
+                                        $customizations_price = 0;
 
-                                    for($j = 0; $j < count($customizations); $j++) {
-                                        $customizations_price = $customizations_price + ($customizations[$j]->getPrice() * $cart[$i]->getQty());
-                                    }
+                                        $customizations = $cart[$i]->getCustomizations();
 
-                                    $price = $cart[$i]->getPrice() * $cart[$i]->getQty() + $customizations_price;
+                                        for($j = 0; $j < count($customizations); $j++) {
+                                            $customizations_price = $customizations_price + ($customizations[$j]->getPrice() * $cart[$i]->getQty());
+                                        }
 
-                                    $totalPrice = $totalPrice + $price;
+                                        $price = $cart[$i]->getPrice() * $cart[$i]->getQty() + $customizations_price;
 
-                                    echo "<tr>";
-                                    echo "    <td>{$cart[$i]->getName()}</td>";
-                                    echo "    <td>{$cart[$i]->getQty()}</td>";
-                                    echo "    <td>{$cart[$i]->getPrice()}</td>";
-                                    echo "    <td>{$customizations_price}</td>";
-                                    echo "    <td>{$price}</td>";
-                                    echo "    <td><a href='./delete_from_cart.php?id={$cart[$i]->getID()}'>Delete</a></td>";
-                                    echo "</tr>";
+                                        $totalPrice = $totalPrice + $price;
 
-                                    for($j = 0; $j < count($customizations); $j++) {
                                         echo "<tr>";
-                                        echo "    <td><i>&nbsp;&nbsp;+  {$customizations[$j]->getName()}</i></td>";
-                                        echo "    <td></td>";
-                                        echo "    <td>{$customizations[$j]->getPrice()}</td>";
-                                        echo "    <td></td>";
-                                        echo "    <td></td>";
-                                        echo "    <td><a href='./delete_customization.php?id={$cart[$i]->getID()}&cid={$customizations[$j]->getId()}'>Delete</a></td>";
+                                        echo "    <td>{$cart[$i]->getName()}</td>";
+                                        echo "    <td>{$cart[$i]->getQty()}</td>";
+                                        echo "    <td>{$cart[$i]->getPrice()}</td>";
+                                        echo "    <td>{$customizations_price}</td>";
+                                        echo "    <td>{$price}</td>";
+                                        echo "    <td><a href='./delete_from_cart.php?id={$cart[$i]->getID()}'>Delete</a></td>";
                                         echo "</tr>";
+
+                                        for($j = 0; $j < count($customizations); $j++) {
+                                            echo "<tr>";
+                                            echo "    <td><i>&nbsp;&nbsp;+  {$customizations[$j]->getName()}</i></td>";
+                                            echo "    <td></td>";
+                                            echo "    <td>{$customizations[$j]->getPrice()}</td>";
+                                            echo "    <td></td>";
+                                            echo "    <td></td>";
+                                            echo "    <td><a href='./delete_customization.php?id={$cart[$i]->getID()}&cid={$customizations[$j]->getId()}'>Delete</a></td>";
+                                            echo "</tr>";
+                                        }
                                     }
                                 }
 

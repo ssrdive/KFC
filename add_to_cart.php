@@ -2,12 +2,6 @@
 include './database.php';
 include './cart.class.php';
 
-session_start();
-
-if(!isset($_SESSION['customerUsername'])) {
-    header('Location: ./sign_in.php');
-}
-
 $item_id = $_GET['id'];
 
 $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);

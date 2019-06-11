@@ -1,3 +1,11 @@
+<?php
+include './database.php';
+session_start();
+
+if(isset($_SESSION['customerUsername'])) {
+    header('Location: ./index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -39,9 +47,9 @@
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/cart.php">Cart (4)</a>&nbsp;
+                    <?php
+                        include './layout/sign_in_menu.php';
+                    ?>
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
                 </div>
             </div>
@@ -66,6 +74,33 @@
             </div>
         </div>
 
+        <?php
+            if(isset($_POST['register'])) {
+                $first_name = $_POST['firstName'];
+                $last_name = $_POST['lastName'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+
+                $full_name = $first_name." ".$last_name;
+
+                $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                if(!$db) {
+                    die("Cannot connect to database");
+                }
+
+                $register_sql = "INSERT INTO customer (email, password, name) VALUES ('{$email}', '{$password}', '{$full_name}')";
+
+                $result = mysqli_query($db, $register_sql);
+
+                if($result) {
+                    echo "<script type='text/javascript'>alert('Account created. Please use sign in page to sign in.')</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('Failed to create account')</script>";
+                }
+            }
+        ?>
+
         <div class="signInContainer">
             <div class="signInWrapper">
                 <div>
@@ -74,28 +109,28 @@
                         <table>
                             <tr>
                                 <td style="font-family: 'Laila', serif;">First Name</td>
-                                <td><input type="text" id="firstName" placeholder="First Name" class="signInInput"></td>
+                                <td><input type="text" id="firstName" name="firstName" placeholder="First Name" class="signInInput"></td>
                             </tr>
                             <tr>
                                 <td style="font-family: 'Laila', serif;">Last Name</td>
-                                <td><input type="text" id="lastName" placeholder="Last Name" class="signInInput"></td>
+                                <td><input type="text" id="lastName" name="lastName" placeholder="Last Name" class="signInInput"></td>
                             </tr>
                             <tr>
                                 <td style="font-family: 'Laila', serif;">Email</td>
-                                <td><input type="text" id="email" placeholder="Email" class="signInInput"></td>
+                                <td><input type="text" id="email" name="email" placeholder="Email" class="signInInput"></td>
                             </tr>
                             <tr>
                                 <td style="font-family: 'Laila', serif;">Pasword&nbsp;&nbsp;</td>
-                                <td><input type="password" id="password" placeholder="Password" class="signInInput"></td>
+                                <td><input type="password" id="password" name="password" placeholder="Password" class="signInInput"></td>
                             </tr>
                             <tr>
                                 <td style="font-family: 'Laila', serif;">Confirm Password&nbsp;&nbsp;</td>
-                                <td><input type="password" id="confirmPassword" placeholder="Confirm Password" class="signInInput"></td>
+                                <td><input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" class="signInInput"></td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td style="float: right;">
-                                    <button type="submit" class="defaultButton" name="" value="Sign in" onclick="registerClicked()">Register</button>
+                                    <button type="submit" class="defaultButton" name="register" value="Sign in" onclick="registerClicked()">Register</button>
                                 </td>
                             </tr>
                         </table>

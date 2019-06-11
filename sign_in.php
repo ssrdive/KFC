@@ -59,6 +59,7 @@ if(isset($_SESSION['customerUsername'])) {
 
                     $_SESSION['customerUsername'] = $email;
                     $_SESSION['customerName'] = $row['name'];
+                    $_SESSION['customerId'] = $row['id'];
                     header('Location: ./index.php');
                 } else {
                     echo "<script type='text/javascript'>alert('Please check credentials')</script>";
@@ -73,9 +74,9 @@ if(isset($_SESSION['customerUsername'])) {
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/cart.php">Cart (4)</a>&nbsp;
+                    <?php
+                        include './layout/sign_in_menu.php';
+                    ?>
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
                 </div>
             </div>
