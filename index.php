@@ -124,7 +124,7 @@ session_start();
                     <a href="/">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="/about_kfc.php">About KFC</a>&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="/contact_us.php">Contact Us</a>&nbsp;&nbsp;&nbsp;
-                    <a href="#">Feedback</a>
+                    <a href="/feedback.php">Feedback</a>
                 </div>
                 <div class="socialMediaIcons">
                     <a href="#"><img style="width: 30px; height: 30px;" src="./img/fb-icon.jpg" alt=""></a>

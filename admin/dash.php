@@ -40,6 +40,27 @@ if(!isset($_SESSION['adminUsername'])) {
                     alert('Please enter all the details');
                 }
             }
+
+            function addUserValidation() {
+                var name = document.getElementById('addUserName').value;
+                var password = document.getElementById('addUserPassword').value;
+
+                if(name == '' || password == '') {
+                    event.preventDefault();
+                    alert('Please enter the username and password');
+                }
+            }
+
+            function addRiderValidation() {
+                var username = document.getElementById('addRiderUsername').value;
+                var password = document.getElementById('addRiderPassword').value;
+                var name = document.getElementById('addRiderName').value;
+
+                if(username == '' || password == '' || name == '') {
+                    event.preventDefault();
+                    alert('Please enter all details');
+                }
+            }
         </script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -142,6 +163,45 @@ if(!isset($_SESSION['adminUsername'])) {
                 } else {
                     echo "<script type='text/javascript'>alert('Failed to delete customization')</script>";
                 }
+            } else if(isset($_POST['addUser'])) {
+                $name = $_POST['addUserName'];
+                $password = $_POST['addUserPassword'];
+
+                $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                if(!$db) {
+                    die("Cannot connect to database");
+                }
+
+                $sql = "INSERT INTO admin_user (username, password) VALUES ('{$name}', '{$password}');";
+
+                $result = mysqli_query($db, $sql);
+
+                if($result) {
+                    echo "<script type='text/javascript'>alert('User added')</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('Failed to add user')</script>";
+                }
+            } else if(isset($_POST['addRider'])) {
+                $username = $_POST['addRiderUsername'];
+                $password = $_POST['addRiderPassword'];
+                $name = $_POST['addRiderName'];
+
+                $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                if(!$db) {
+                    die("Cannot connect to database");
+                }
+
+                $sql = "INSERT INTO rider (username, password, name) VALUES ('{$username}', '{$password}', '{$name}');";
+
+                $result = mysqli_query($db, $sql);
+
+                if($result) {
+                    echo "<script type='text/javascript'>alert('Rider added')</script>";
+                } else {
+                    echo "<script type='text/javascript'>alert('Failed to add rider')</script>";
+                }
             }
         ?>
 
@@ -161,8 +221,8 @@ if(!isset($_SESSION['adminUsername'])) {
             <div class="topnav">
                 <div class="menuBarContent">
                     <div>
-                        <a class="active" href="#home">DEALS</a>
-                        <a href="#about">MENU</a>
+                        <a class="active" href="/">DEALS</a>
+                        <a href="/menu.php">MENU</a>
                     </div>
                     <div class="search-container">
                         <div>
@@ -180,15 +240,30 @@ if(!isset($_SESSION['adminUsername'])) {
             <div class="signInWrapper">
                 <div>
                     <h1 style="font-family: 'Laila', serif; text-align: center;">Admin Area</h1>
-                    <?php
-                        if($_GET['message'] != "") {
-                            echo "<p style='padding: 0; margin: 0;'>{$_GET['message']}</p>";
-                        }
-                    ?>
                 </div>
             </div>
 
             <div class="adminAreaContainer">
+                <div class="adminAreaContainerItem">
+                    <h4>Orders</h4>
+                    <table>
+                        <tr>
+                            <td><button onclick="window.location.href='./orders.php'" class="secondaryButton">Manage Orders</button></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="adminAreaContainerItem">
                     <h4>Add Item</h4>
                     <form action="./dash.php" method="post" enctype="multipart/form-data">
@@ -328,6 +403,49 @@ if(!isset($_SESSION['adminUsername'])) {
                         </table>
                     </form>
                 </div>
+                <div class="adminAreaContainerItem">
+                    <h4>Add User</h4>
+                    <form action="./dash.php" method="post" enctype="multipart/form-data">
+                        <table>
+                            <tr>
+                                <td>Username</td>
+                                <td><input type="text" id="addUserName" name="addUserName" class="signInInput"></td>
+                            </tr>
+                            <tr>
+                                <td>Password</td>
+                                <td><input type="password" id="addUserPassword" name="addUserPassword" class="signInInput"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button type="submit" class="defaultButton" name="addUser" value="Add" onclick="addUserValidation()">Add User</button></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="adminAreaContainerItem">
+                    <h4>Add Rider</h4>
+                    <form action="./dash.php" method="post" enctype="multipart/form-data">
+                        <table>
+                            <tr>
+                                <td>Username</td>
+                                <td><input type="text" id="addRiderUsername" name="addRiderUsername" class="signInInput"></td>
+                            </tr>
+                            <tr>
+                                <td>Password</td>
+                                <td><input type="password" id="addRiderPassword" name="addRiderPassword" class="signInInput"></td>
+                            </tr>
+                            <tr>
+                                <td>Name</td>
+                                <td><input type="text" id="addRiderName" name="addRiderName" class="signInInput"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button type="submit" class="defaultButton" name="addRider" value="Add" onclick="addRiderValidation()">Add Rider</button></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
             </div>
         </div>
 
@@ -335,9 +453,9 @@ if(!isset($_SESSION['adminUsername'])) {
             <div class="bottomNavContents">
                 <div>
                     <a href="/">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#">About KFC</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#">Contact Us</a>&nbsp;&nbsp;&nbsp;
-                    <a href="#">Feedback</a>
+                    <a href="/about_kfc.php">About KFC</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/contact_us.php">Contact Us</a>&nbsp;&nbsp;&nbsp;
+                    <a href="/feedback.php">Feedback</a>
                 </div>
                 <div class="socialMediaIcons">
                     <a href="#"><img style="width: 30px; height: 30px;" src="./img/fb-icon.jpg" alt=""></a>

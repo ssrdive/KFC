@@ -7,7 +7,7 @@
     }
 
     if(isset($_SESSION['customerUsername'])) {
-        echo "<a href='#'>Hello {$_SESSION['customerName']}</a>&nbsp;&nbsp;&bull;&nbsp;";
+        echo "<a href='./my_orders.php'>Hello {$_SESSION['customerName']}</a>&nbsp;&nbsp;&bull;&nbsp;";
         echo '<a href="/sign_out.php">Sign out</a>&nbsp;&nbsp;&bull;&nbsp;';
         echo "<a href='/cart.php'>Cart ({$cartItems})</a>&nbsp;";
     } else {

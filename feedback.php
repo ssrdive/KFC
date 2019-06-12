@@ -55,9 +55,9 @@ session_start();
         <div class="checkoutContainer">
             <div class="checkoutWrapper">
                 <div>
-                    <h1 style="font-family: 'Laila', serif; text-align: center;">About KFC</h1>
+                    <h1 style="font-family: 'Laila', serif; text-align: center;">Feedback</h1>
                     <p>
-                    KFC, also known as Kentucky Fried Chicken, is an American fast food restaurant chain headquartered in Louisville, Kentucky, that specializes in fried chicken. It is the world's second-largest restaurant chain after McDonald's, with 22,621 locations globally in 136 countries as of December 2018.</p>
+                    </p>
                 </div>
             </div>
         </div>

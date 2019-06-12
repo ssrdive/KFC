@@ -1,10 +1,10 @@
 <?php
 
-include '../database.php';
+include './database.php';
 
 session_start();
-if(isset($_SESSION['adminUsername'])) {
-    header('Location: ./dash.php');
+if(!isset($_SESSION['customerUsername'])) {
+    header('Location: ./sign_in.php');
 }
 ?>
 <!DOCTYPE html>
@@ -12,21 +12,12 @@ if(isset($_SESSION['adminUsername'])) {
     <head>
         <meta charset="utf-8">
         <title>KFC Chicken, Burgers and Rice - Checkout Delicious Menu and Order Online</title>
-        <link rel="icon" href="../img/favicon.png">
+        <link rel="icon" href="./img/favicon.png">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../css/layout.css">
-        <link rel="stylesheet" href="../css/sign_in.css">
+        <link rel="stylesheet" href="./css/layout.css">
+        <link rel="stylesheet" href="./css/cart.css">
         <script type="text/javascript">
-            function signInClicked() {
-                var email = document.getElementById('signInEmail').value;
-                var password = document.getElementById('signInPassword').value;
-
-                if(email == '' || password == '') {
-                    event.preventDefault();
-                    alert('Please enter sign in email and password');
-                }
-            }
         </script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -36,13 +27,13 @@ if(isset($_SESSION['adminUsername'])) {
     <body>
         <div class="logoRow">
             <div>
-                <img style="width: 80px" src="../img/logo.png">
+                <img style="width: 80px" src="./img/logo.png">
             </div>
             <div class="topSideBar">
                 <div>
-                    <a href="/sign_in.php">Sign in</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/register.php">Register</a>&nbsp;&nbsp;&bull;&nbsp;
-                    <a href="/cart.php">Cart (4)</a>&nbsp;
+                    <?php
+                        include './layout/sign_in_menu.php';
+                    ?>
                     <a href="/cart.php"><img style="width: 60px; height: 60px;" src="./img/shopping_cart.png" alt=""></a>
                 </div>
             </div>
@@ -68,10 +59,8 @@ if(isset($_SESSION['adminUsername'])) {
         </div>
 
         <?php
-            if(isset($_POST['signIn'])) {
-
-                $email = $_POST['signInEmail'];
-                $password = $_POST['signInPassword'];
+            if(isset($_POST['complete'])) {
+                $order_id = $_GET['id'];
 
                 $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -79,55 +68,62 @@ if(isset($_SESSION['adminUsername'])) {
                     die("Cannot connect to database");
                 }
 
-                $sql = "SELECT * FROM admin_user WHERE username='{$email}' AND password='{$password}'";
+                $sql = "UPDATE orders SET status = 'Completed' WHERE id = '{$order_id}'";
 
                 $result = mysqli_query($db, $sql);
-
-                mysqli_close($db);
-
-                $errorMessage = "";
-
-                if(mysqli_num_rows($result) > 0) {
-                    $_SESSION['adminUsername'] = $email;
-                    header('Location: ./dash.php');
-                } else {
-                    $errorMessage = "Please check the credentials";
-                }
-
-                if($errorMessage != "") {
-                    echo "<script type='text/javascript'>alert('{$errorMessage}')</script>";
-                }
-
             }
         ?>
 
-        <div class="signInContainer">
-            <div class="signInWrapper">
+        <div class="cartContainer">
+            <div class="cartWrapper">
                 <div>
-                    <h1 style="font-family: 'Laila', serif; text-align: center;">Admin Area Sign in</h1>
-                    <form action="/admin/index.php" method="post">
-                        <table>
+                    <h1 style="font-family: 'Laila', serif; text-align: center;">Orders</h1>
+
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td style="font-family: 'Laila', serif;">Email</td>
-                                <td><input type="text" id="signInEmail" name="signInEmail" class="signInInput"></td>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Address No</th>
+                                <th>Street</th>
+                                <th>City</th>
+                                <th>District</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Reorder</th>
                             </tr>
-                            <tr>
-                                <td style="font-family: 'Laila', serif;">Pasword&nbsp;&nbsp;</td>
-                                <td><input type="password" id="signInPassword" name="signInPassword" class="signInInput"></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td style="font-family: 'Laila', serif; text-align: right;"><a href="/forgotPassword.php">Forgot Password?</a></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td style="float: right;">
-                                    <a href="./register.php"><button type="button" class="secondaryButton" name="button">Register</button></a>
-                                    <button type="submit" class="defaultButton" name="signIn" value="Sign in" onclick="signInClicked()">Sign in</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $db = mysqli_connect(DB_IP, DB_USER, DB_PASSWORD, DB_NAME);
+
+                                if(!$db) {
+                                    die("Cannot connect to database");
+                                }
+
+                                $sql = "SELECT * FROM orders WHERE c_id = '{$_SESSION['customerId']}'";
+
+                                $result = mysqli_query($db, $sql);
+
+                                while($row = mysqli_fetch_assoc($result)) {
+                                    echo "<tr>";
+                                    echo "    <td><a href='./order_items.php?id={$row['id']}'>{$row['id']}</a></td>";
+                                    echo "    <td>{$row['c_name']}</td>";
+                                    echo "    <td>{$row['c_address_no']}</td>";
+                                    echo "    <td>{$row['c_street']}</td>";
+                                    echo "    <td>{$row['c_city']}</td>";
+                                    echo "    <td>{$row['c_district']}</td>";
+                                    echo "    <td>{$row['price']}</td>";
+                                    echo "    <td>{$row['status']}</td>";
+                                    echo "    <td><a href='./reorder.php?id={$row['id']}'>Reorder</a></td>";
+                                }
+                            ?>
+                        </tbody>
+                    </table>
+
+                    <?php
+
+                    ?>
                 </div>
             </div>
         </div>

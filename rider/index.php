@@ -3,7 +3,7 @@
 include '../database.php';
 
 session_start();
-if(isset($_SESSION['adminUsername'])) {
+if(isset($_SESSION['riderUsername'])) {
     header('Location: ./dash.php');
 }
 ?>
@@ -79,7 +79,7 @@ if(isset($_SESSION['adminUsername'])) {
                     die("Cannot connect to database");
                 }
 
-                $sql = "SELECT * FROM admin_user WHERE username='{$email}' AND password='{$password}'";
+                $sql = "SELECT * FROM rider WHERE username='{$email}' AND password='{$password}'";
 
                 $result = mysqli_query($db, $sql);
 
@@ -87,8 +87,11 @@ if(isset($_SESSION['adminUsername'])) {
 
                 $errorMessage = "";
 
+                $rider_details = mysqli_fetch_assoc($result);
+
                 if(mysqli_num_rows($result) > 0) {
-                    $_SESSION['adminUsername'] = $email;
+                    $_SESSION['riderUsername'] = $email;
+                    $_SESSION['riderId'] = $rider_details['id'];
                     header('Location: ./dash.php');
                 } else {
                     $errorMessage = "Please check the credentials";
@@ -104,11 +107,11 @@ if(isset($_SESSION['adminUsername'])) {
         <div class="signInContainer">
             <div class="signInWrapper">
                 <div>
-                    <h1 style="font-family: 'Laila', serif; text-align: center;">Admin Area Sign in</h1>
-                    <form action="/admin/index.php" method="post">
+                    <h1 style="font-family: 'Laila', serif; text-align: center;">Rider Sign in</h1>
+                    <form action="/rider/index.php" method="post">
                         <table>
                             <tr>
-                                <td style="font-family: 'Laila', serif;">Email</td>
+                                <td style="font-family: 'Laila', serif;">Username</td>
                                 <td><input type="text" id="signInEmail" name="signInEmail" class="signInInput"></td>
                             </tr>
                             <tr>
@@ -122,7 +125,6 @@ if(isset($_SESSION['adminUsername'])) {
                             <tr>
                                 <td></td>
                                 <td style="float: right;">
-                                    <a href="./register.php"><button type="button" class="secondaryButton" name="button">Register</button></a>
                                     <button type="submit" class="defaultButton" name="signIn" value="Sign in" onclick="signInClicked()">Sign in</button>
                                 </td>
                             </tr>
