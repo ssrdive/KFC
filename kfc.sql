@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
--- https://www.phpmyadmin.net/
+-- version 4.4.15.7
+-- http://www.phpmyadmin.net
 --
--- Host: localhost:3306
--- Generation Time: Jun 07, 2019 at 06:09 PM
--- Server version: 5.7.26-0ubuntu0.18.04.1
--- PHP Version: 7.2.19-0ubuntu0.18.04.1
+-- Host: 127.0.0.1
+-- Generation Time: Jun 12, 2019 at 11:12 AM
+-- Server version: 5.6.37
+-- PHP Version: 7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,18 +26,18 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin_user`
 --
 
-CREATE TABLE `admin_user` (
+CREATE TABLE IF NOT EXISTS `admin_user` (
   `id` int(11) NOT NULL,
   `username` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin_user`
 --
 
 INSERT INTO `admin_user` (`id`, `username`, `password`) VALUES
-(1, 'shamal', 'shamal');
+(1, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -45,19 +45,12 @@ INSERT INTO `admin_user` (`id`, `username`, `password`) VALUES
 -- Table structure for table `customer`
 --
 
-CREATE TABLE `customer` (
+CREATE TABLE IF NOT EXISTS `customer` (
   `id` int(11) NOT NULL,
   `email` varchar(64) NOT NULL,
   `password` varchar(64) NOT NULL,
   `name` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `customer`
---
-
-INSERT INTO `customer` (`id`, `email`, `password`, `name`) VALUES
-(1, 'shamal@gmail.com', 'shamal', 'Shamal Sandeep');
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -65,12 +58,12 @@ INSERT INTO `customer` (`id`, `email`, `password`, `name`) VALUES
 -- Table structure for table `customization`
 --
 
-CREATE TABLE `customization` (
+CREATE TABLE IF NOT EXISTS `customization` (
   `id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   `price` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -78,21 +71,19 @@ CREATE TABLE `customization` (
 -- Table structure for table `item`
 --
 
-CREATE TABLE `item` (
+CREATE TABLE IF NOT EXISTS `item` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   `price` int(11) NOT NULL,
   `image` varchar(64) NOT NULL,
   `deal` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `item`
 --
 
 INSERT INTO `item` (`id`, `name`, `price`, `image`, `deal`) VALUES
-(25, 'Double Down Combo', 1100, '4749ba09104214b1f8046cb3d48938ba.png', 1),
-(26, 'KFC Favorites', 950, 'a469186f61ac7150b8652e4ddf6312ad.png', 1),
 (27, 'Wednesday Strips Bucket', 900, '03099bee49d1af734cd66e7791734437.png', 1),
 (28, 'Smoky Grilled', 1350, '3d03cbe7b3be31a21294971dc8b1b1a7.png', 1),
 (29, 'Zinger Doubles', 550, 'b7a0ce0c3c0dec2bd5b7bac351a374e3.png', 1),
@@ -105,6 +96,69 @@ INSERT INTO `item` (`id`, `name`, `price`, `image`, `deal`) VALUES
 (36, 'Zinger', 700, 'b143a5b581990a00fea0855b877e6244.jpg', 0),
 (37, 'Qurrito Cheeser', 900, '975ef7a198a7ed18ce5bc8ff3df5cc2d.jpg', 0);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` int(11) NOT NULL,
+  `c_id` int(11) DEFAULT NULL,
+  `c_name` varchar(32) NOT NULL,
+  `c_address_no` varchar(32) NOT NULL,
+  `c_street` varchar(32) NOT NULL,
+  `c_city` varchar(32) NOT NULL,
+  `c_district` varchar(32) NOT NULL,
+  `price` int(11) NOT NULL,
+  `status` varchar(32) DEFAULT 'Processing',
+  `rider_id` int(11) DEFAULT NULL,
+  `rider_name` varchar(32) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders_items`
+--
+
+CREATE TABLE IF NOT EXISTS `orders_items` (
+  `id` int(11) NOT NULL,
+  `orders_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders_item_customization`
+--
+
+CREATE TABLE IF NOT EXISTS `orders_item_customization` (
+  `id` int(11) NOT NULL,
+  `orders_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `customization_id` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rider`
+--
+
+CREATE TABLE IF NOT EXISTS `rider` (
+  `id` int(11) NOT NULL,
+  `username` varchar(32) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `name` varchar(32) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
 --
 -- Indexes for dumped tables
 --
@@ -113,7 +167,8 @@ INSERT INTO `item` (`id`, `name`, `price`, `image`, `deal`) VALUES
 -- Indexes for table `admin_user`
 --
 ALTER TABLE `admin_user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `customer`
@@ -135,6 +190,37 @@ ALTER TABLE `item`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `c_id` (`c_id`),
+  ADD KEY `rider_id` (`rider_id`);
+
+--
+-- Indexes for table `orders_items`
+--
+ALTER TABLE `orders_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `orders_id` (`orders_id`),
+  ADD KEY `item_id` (`item_id`);
+
+--
+-- Indexes for table `orders_item_customization`
+--
+ALTER TABLE `orders_item_customization`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `orders_id` (`orders_id`),
+  ADD KEY `item_id` (`item_id`),
+  ADD KEY `customization_id` (`customization_id`);
+
+--
+-- Indexes for table `rider`
+--
+ALTER TABLE `rider`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -142,22 +228,42 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT for table `admin_user`
 --
 ALTER TABLE `admin_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `customization`
 --
 ALTER TABLE `customization`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT for table `orders_items`
+--
+ALTER TABLE `orders_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+--
+-- AUTO_INCREMENT for table `orders_item_customization`
+--
+ALTER TABLE `orders_item_customization`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+--
+-- AUTO_INCREMENT for table `rider`
+--
+ALTER TABLE `rider`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
@@ -167,6 +273,28 @@ ALTER TABLE `item`
 --
 ALTER TABLE `customization`
   ADD CONSTRAINT `customization_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`);
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`c_id`) REFERENCES `customer` (`id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`rider_id`) REFERENCES `rider` (`id`);
+
+--
+-- Constraints for table `orders_items`
+--
+ALTER TABLE `orders_items`
+  ADD CONSTRAINT `orders_items_ibfk_1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`),
+  ADD CONSTRAINT `orders_items_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`);
+
+--
+-- Constraints for table `orders_item_customization`
+--
+ALTER TABLE `orders_item_customization`
+  ADD CONSTRAINT `orders_item_customization_ibfk_1` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`),
+  ADD CONSTRAINT `orders_item_customization_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`id`),
+  ADD CONSTRAINT `orders_item_customization_ibfk_3` FOREIGN KEY (`customization_id`) REFERENCES `customization` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
